@@ -36,6 +36,7 @@ function checkAuthentication() {
 
     var result = lock.parseHash(window.location.hash);
     if (result) {
+        window.location.hash = ' ';
         if (result.error) {
             // error logging in
             // todo: let elm know, result.error - result.error_description
