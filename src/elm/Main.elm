@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import App.Model as Model exposing (Model, Msg(..))
+import App.Model as Model exposing (Model, Msg(Authentication))
 import App.Update exposing (init, update)
 import App.View exposing (view)
 

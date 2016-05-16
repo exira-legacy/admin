@@ -7,6 +7,7 @@ module Authentication.Auth0 exposing
   , LoggedInUser
   , UserProfile
   , Token
+  , Options
   , mapResult
   )
 
@@ -42,7 +43,6 @@ type alias Options =
    , closable : Bool
    , popup : Bool
    , sso : Bool
-   , callbackURL : String
    , authParams: { scope: String }
    }
 
@@ -53,7 +53,6 @@ defaultOpts =
   , closable = False
   , popup = False
   , sso = True
-  , callbackURL = "http://localhost:3000"
   , authParams = { scope = "openid" }
   }
 

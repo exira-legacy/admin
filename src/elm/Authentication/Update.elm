@@ -2,7 +2,7 @@ module Authentication.Update exposing (init, update, handleAuthResult)
 
 import Authentication.Model exposing (Model, Msg(..))
 import Authentication.Auth0 exposing (AuthenticationState(..), RawAuthenticationResult, mapResult, defaultOpts)
-import Ports exposing (auth0showLock)
+import Ports exposing (auth0showLock, auth0Logout)
 
 init : Model
 init =
@@ -23,14 +23,10 @@ update msg model =
         ({ model | state = newState, lastError = error }, Cmd.none)
 
     ShowLogin ->
-      let
-        effect =
-          auth0showLock defaultOpts
-      in
-        (model, effect)
+      (model, auth0showLock defaultOpts)
 
     Logout ->
-      ({ model | state = LoggedOut }, Cmd.none)
+      ({ model | state = LoggedOut }, auth0Logout ())
 
 handleAuthResult : RawAuthenticationResult -> Msg
 handleAuthResult = mapResult >> AuthenticationResult
