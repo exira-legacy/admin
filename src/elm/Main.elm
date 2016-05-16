@@ -1,38 +1,22 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, button, text)
-import Html.App exposing (beginnerProgram)
-import Html.Events exposing (onClick)
+import App.Model as Model exposing (Model, Msg(Authentication))
+import App.Update exposing (init, update)
+import App.View exposing (view)
 
+import Html.App exposing (program)
+import Authentication.Update exposing (handleAuthResult)
+import Ports
 
 main : Program Never
 main =
-    beginnerProgram { model = 0, view = view, update = update }
+    program
+    { init = init
+    , update = update
+    , subscriptions = subscriptions
+    , view = view
+    }
 
-
-type alias Model =
-    Int
-
-
-type Msg
-    = Increment
-    | Decrement
-
-
-update : Msg -> Model -> Model
-update msg model =
-    case msg of
-        Increment ->
-            model + 1
-
-        Decrement ->
-            model - 1
-
-
-view : Model -> Html Msg
-view model =
-    div []
-        [ button [ onClick Decrement ] [ text "-" ]
-        , div [] [ text (toString model) ]
-        , button [ onClick Increment ] [ text "+" ]
-        ]
+subscriptions : Model -> Sub Model.Msg
+subscriptions model =
+  Ports.auth0authResult (handleAuthResult >> Authentication)
