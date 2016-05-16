@@ -42,7 +42,7 @@ type alias Options =
    , closable : Bool
    , popup : Bool
    , sso : Bool
-   , callbackURL : String
+   --, callbackURL : String
    , authParams: { scope: String }
    }
 

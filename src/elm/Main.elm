@@ -22,7 +22,7 @@ main =
 auth0Options : Options
 auth0Options =
   { responseType = "token"
-  , callbackURL = "http://localhost:3000"
+  --, callbackURL = Nothing -- "http://localhost:3000"
   , rememberLastLogin = True
   , closable = False
   , popup = False
