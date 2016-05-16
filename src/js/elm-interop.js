@@ -4,11 +4,11 @@ var lock = new Auth0Lock('CIikEka4ppyhBX9akgoFCaNU74ApCKUH', 'exira.eu.auth0.com
 
 var main = Elm.Main.fullscreen();
 
-main.ports.auth0showLock.subscribe(function (opts) {
+main.ports.showLock.subscribe(function (opts) {
     lock.show(opts);
 });
 
-main.ports.auth0Logout.subscribe(function () {
+main.ports.logout.subscribe(function () {
     window.localStorage.removeItem('id_token');
     lock.logout({ returnTo: 'https://exira.com' });
 });
@@ -23,7 +23,7 @@ function passTokenToElm(token) {
             result.err = err.details;
         }
 
-        main.ports.auth0authResult.send(result);
+        main.ports.authResult.send(result);
     });
 }
 

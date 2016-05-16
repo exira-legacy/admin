@@ -3,11 +3,10 @@ module Authentication.Auth0 exposing
   , AuthenticationError
   , AuthenticationResult
   , RawAuthenticationResult
-  , defaultOpts
+  , Options
   , LoggedInUser
   , UserProfile
   , Token
-  , Options
   , mapResult
   )
 
@@ -43,18 +42,9 @@ type alias Options =
    , closable : Bool
    , popup : Bool
    , sso : Bool
+   , callbackURL : String
    , authParams: { scope: String }
    }
-
-defaultOpts : Options
-defaultOpts =
-  { responseType = "token"
-  , rememberLastLogin = True
-  , closable = False
-  , popup = False
-  , sso = True
-  , authParams = { scope = "openid" }
-  }
 
 mapResult : RawAuthenticationResult -> AuthenticationResult
 mapResult result =

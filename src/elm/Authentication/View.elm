@@ -10,7 +10,7 @@ import Authentication.Auth0 exposing (UserProfile)
 loggedOutUser : Msg -> Html Msg
 loggedOutUser loginAction =
   div []
-    [ text "Log in to see information about you"
+    [ text "Log in to see information about you: "
     , button
         [ onClick loginAction ]
         [ text "Login" ]

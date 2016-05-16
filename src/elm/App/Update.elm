@@ -1,23 +1,20 @@
-module App.Update exposing
-  ( init
-  , update
-  )
-
-import Authentication.Update as Authentication exposing (init, update)
+module App.Update exposing (init, update)
 
 import App.Model exposing (Model, Msg(..))
+import Authentication.Update as Authentication exposing (init, update)
+import Authentication.Auth0 exposing (Options)
 
-init : (Model, Cmd Msg)
-init =
-  ( Model Authentication.init
+init : Options -> (Model, Cmd Msg)
+init authenticationOptions =
+  ( Model (Authentication.init authenticationOptions)
   , Cmd.none
   )
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    Authentication msg ->
+    Authentication authMsg ->
       let
-        (newAuth, commands) = Authentication.update msg model.auth
+        (authModel, cmd) = Authentication.update authMsg model.auth
       in
-        ({ model | auth = newAuth }, commands |> Cmd.map Authentication)
+        ({ model | auth = authModel }, cmd |> Cmd.map Authentication)
