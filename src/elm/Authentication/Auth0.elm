@@ -38,12 +38,12 @@ type alias AuthenticationResult = Result AuthenticationError LoggedInUser
 
 type alias Options =
    { responseType : String
-   , rememberLastLogin : Bool
-   , closable : Bool
-   , popup : Bool
-   , sso : Bool
-   --, callbackURL : String
-   , authParams: { scope: String }
+   , rememberLastLogin : Maybe Bool
+   , closable : Maybe Bool
+   , popup : Maybe Bool
+   , sso : Maybe Bool
+   , callbackURL : Maybe String
+   , authParams: Maybe { scope: String }
    }
 
 mapResult : RawAuthenticationResult -> AuthenticationResult

@@ -22,12 +22,12 @@ main =
 auth0Options : Options
 auth0Options =
   { responseType = "token"
-  --, callbackURL = Nothing -- "http://localhost:3000"
-  , rememberLastLogin = True
-  , closable = False
-  , popup = False
-  , sso = True
-  , authParams = { scope = "openid" }
+  , callbackURL = Nothing -- "http://localhost:3000"
+  , rememberLastLogin = Just True
+  , closable = Just False
+  , popup = Just False
+  , sso = Just True
+  , authParams = Just { scope = "openid" }
   }
 
 subscriptions : Model -> Sub Model.Msg
