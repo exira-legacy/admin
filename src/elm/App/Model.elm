@@ -6,14 +6,14 @@ import Authentication.Model as Authentication exposing (Model, init)
 import Header.Model as Header exposing (Model, init)
 
 -- Temp
-import Authentication.Auth0 exposing (Options)
+import Authentication.Auth0 exposing (LockOptions)
 
 type alias Model =
   { authentication: Authentication.Model
   , header : Header.Model
   }
 
-init : Options -> (Model, Cmd Msg)
+init : LockOptions -> (Model, Cmd Msg)
 init authenticationOptions =
   let
     (authentication, authenticationFx) =

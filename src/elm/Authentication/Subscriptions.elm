@@ -1,12 +1,14 @@
 module Authentication.Subscriptions exposing (subscriptions)
 
 import Authentication.Model exposing (Model)
-import Authentication.Msg exposing (Msg)
+import Authentication.Msg exposing (Msg(AuthenticationResult))
 
--- import Authentication.Update exposing (handleAuthResult)
--- import Ports exposing (authResult)
+import Ports exposing (authResult)
+import Authentication.Auth0 exposing (RawAuthenticationResult, mapResult)
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Sub.none
-  --authResult (handleAuthResult >> Authentication)
+  authResult (handleAuthResult)
+
+handleAuthResult : RawAuthenticationResult -> Msg
+handleAuthResult = mapResult >> AuthenticationResult

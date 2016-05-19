@@ -7,7 +7,7 @@ import App.Update exposing (update)
 import App.View exposing (view)
 import App.Subscriptions exposing (subscriptions)
 
-import Authentication.Auth0 exposing (Options)
+import Authentication.Auth0 exposing (LockOptions)
 
 main : Program Never
 main =
@@ -18,7 +18,7 @@ main =
     , view = view
     }
 
-auth0Options : Options
+auth0Options : LockOptions
 auth0Options =
   { responseType = "token"
   -- , callbackURL = Nothing -- "http://localhost:3000"

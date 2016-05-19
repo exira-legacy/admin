@@ -3,6 +3,8 @@ module App.Update exposing (update)
 import App.Model exposing (Model)
 import App.Msg exposing (Msg(..))
 
+import Ports exposing (showLock, logout)
+
 import Authentication.Update as Authentication exposing (update)
 import Header.Update as Header exposing (update)
 
@@ -11,7 +13,12 @@ update msg model =
   case msg of
     Authentication authMsg ->
       let
-        (authenticationModel, cmd) = Authentication.update authMsg model.authentication
+        authenticationServices =
+          { onShowLock = showLock
+          , onLogout = logout
+          }
+
+        (authenticationModel, cmd) = Authentication.update authenticationServices authMsg model.authentication
       in
         ({ model | authentication = authenticationModel }, cmd |> Cmd.map Authentication)
 

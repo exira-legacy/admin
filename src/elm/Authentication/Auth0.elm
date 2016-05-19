@@ -3,7 +3,7 @@ module Authentication.Auth0 exposing
   , AuthenticationError
   , AuthenticationResult
   , RawAuthenticationResult
-  , Options
+  , LockOptions
   , LoggedInUser
   , UserProfile
   , Token
@@ -36,7 +36,7 @@ type alias AuthenticationError =
 type alias RawAuthenticationResult = { err : Maybe AuthenticationError, ok : Maybe LoggedInUser }
 type alias AuthenticationResult = Result AuthenticationError LoggedInUser
 
-type alias Options =
+type alias LockOptions =
    { responseType : String
    , rememberLastLogin : Bool
    , closable : Bool

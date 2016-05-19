@@ -1,14 +1,13 @@
 module Authentication.Update exposing (update)
 
---import Ports exposing (showLock, logout)
 import Authentication.Model exposing (Model)
 import Authentication.Msg exposing (Msg(..))
+import Authentication.Services exposing (Services)
 
---import Authentication.Auth0 exposing (Options, AuthenticationState(..), RawAuthenticationResult, mapResult)
 import Authentication.Auth0 exposing (AuthenticationState(..))
 
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
+update : Services -> Msg -> Model -> (Model, Cmd Msg)
+update services msg model =
   case msg of
     AuthenticationResult result ->
       let
@@ -20,15 +19,10 @@ update msg model =
         ({ model | state = newState, lastError = error }, Cmd.none)
 
     ShowLogin ->
-      --(model, model.showLock model.options)
-      (model, Cmd.none)
+      (model, services.onShowLock model.options)
 
     Logout ->
-      --({ model | state = LoggedOut }, model.logout ())
-      ({ model | state = LoggedOut }, Cmd.none)
-
--- handleAuthResult : RawAuthenticationResult -> Msg
--- handleAuthResult = mapResult >> AuthenticationResult
+      ({ model | state = LoggedOut }, services.onLogout ())
 
 -- tryGetUserProfile : Model -> Maybe UserProfile
 -- tryGetUserProfile model =

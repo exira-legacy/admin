@@ -1,8 +1,8 @@
 port module Ports exposing (..)
 
-import Authentication.Auth0 exposing (Options, RawAuthenticationResult)
+import Authentication.Auth0 exposing (LockOptions, RawAuthenticationResult)
 
 -- Auth0 Ports
-port showLock : Options -> Cmd msg
+port showLock : LockOptions -> Cmd msg
 port logout : () -> Cmd msg
 port authResult : (RawAuthenticationResult -> msg) -> Sub msg
