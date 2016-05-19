@@ -2,15 +2,12 @@ module Main exposing (..)
 
 import Html.App exposing (program)
 
-import App.Model as Model exposing (Model, Msg(Header))
-import App.Update exposing (init, update)
+import App.Model exposing (init)
+import App.Update exposing (update)
 import App.View exposing (view)
+import App.Subscriptions exposing (subscriptions)
 
-import Authentication.Update exposing (handleAuthResult)
 import Authentication.Auth0 exposing (Options)
-import Ports exposing (authResult)
-
-import Header.Subscriptions as Header exposing (subscriptions)
 
 main : Program Never
 main =
@@ -31,13 +28,3 @@ auth0Options =
   , sso = True
   , authParams = { scope = "openid" }
   }
-
--- subscriptions : Model -> Sub Model.Msg
--- subscriptions model =
---   authResult (handleAuthResult >> Authentication)
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-  Sub.batch
-    [ Sub.map Header (Header.subscriptions model.header)
-    ]

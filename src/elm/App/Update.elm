@@ -1,35 +1,19 @@
-module App.Update exposing (init, update)
+module App.Update exposing (update)
 
-import App.Model exposing (Model, Msg(..))
-import Authentication.Update as Authentication exposing (init, update)
-import Authentication.Auth0 exposing (Options)
+import App.Model exposing (Model)
+import App.Msg exposing (Msg(..))
 
-import Header.Model as Header exposing (init)
+import Authentication.Update as Authentication exposing (update)
 import Header.Update as Header exposing (update)
-
-init : Options -> (Model, Cmd Msg)
-init authenticationOptions =
-  let
-    -- (auth, authFx) =
-    --   Authentication.init authenticationOptions
-
-    (header, headerFx) =
-      Header.init "Home" "David Cumps"
-  in
-    ( Model header
-    , Cmd.batch
-      [ Cmd.map Header headerFx
-      ]
-  )
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    -- Authentication authMsg ->
-    --   let
-    --     (authModel, cmd) = Authentication.update authMsg model.auth
-    --   in
-    --     ({ model | auth = authModel }, cmd |> Cmd.map Authentication)
+    Authentication authMsg ->
+      let
+        (authenticationModel, cmd) = Authentication.update authMsg model.authentication
+      in
+        ({ model | authentication = authenticationModel }, cmd |> Cmd.map Authentication)
 
     Header headerMsg ->
       let
