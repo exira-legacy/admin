@@ -44,7 +44,11 @@ function checkAuthentication() {
             window.localStorage.setItem('id_token', result.id_token);
             passTokenToElm(result.id_token);
         }
+
+        return;
     }
+
+    main.ports.showLogin.send(true);
 }
 
 setTimeout(function() { checkAuthentication(); }, 0)
