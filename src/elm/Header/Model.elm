@@ -4,11 +4,10 @@ import Header.Msg exposing (Msg)
 
 type alias Model =
   { title : String
-  , name : String
   }
 
-init : String -> String -> (Model, Cmd Msg)
-init title name =
-  ( Model title name
+init : String -> (Model, Cmd Msg)
+init title =
+  ( Model title
   , Cmd.none
   )

@@ -20,7 +20,7 @@ init authenticationOptions =
       Authentication.init authenticationOptions
 
     (header, headerFx) =
-      Header.init "Home" "Anonymous"
+      Header.init "Home"
   in
     ( Model authentication header
     , Cmd.batch

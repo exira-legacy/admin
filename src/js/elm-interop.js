@@ -10,8 +10,15 @@ main.ports.showLock.subscribe(function (opts) {
 
 main.ports.logout.subscribe(function () {
     window.localStorage.removeItem('id_token');
-    lock.logout({ returnTo: 'https://exira.com' });
+    lock.logout({
+        returnTo: 'http://localhost:3000',
+        client_id: 'CIikEka4ppyhBX9akgoFCaNU74ApCKUH'
+    });
 });
+
+function showLogin() {
+    main.ports.showLogin.send(true);
+}
 
 function passTokenToElm(token) {
     lock.getProfile(token, function (err, profile) {
@@ -48,7 +55,7 @@ function checkAuthentication() {
         return;
     }
 
-    main.ports.showLogin.send(true);
+    showLogin();
 }
 
 setTimeout(function() { checkAuthentication(); }, 0)

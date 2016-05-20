@@ -1,8 +1,13 @@
-module Authentication.Model exposing (Model, init)
+module Authentication.Model exposing (Model, init, tryGetUserProfile)
 
 import Authentication.Msg exposing (Msg)
 
-import Authentication.Auth0 exposing (AuthenticationState(LoggedOut), AuthenticationError, LockOptions)
+import Authentication.Auth0 exposing
+  ( AuthenticationState(LoggedIn, LoggedOut)
+  , AuthenticationError
+  , LockOptions
+  , UserProfile
+  )
 
 type alias Model =
   { state : AuthenticationState
@@ -19,3 +24,15 @@ init options =
     }
   , Cmd.none
   )
+
+tryGetUserProfile : Model -> Maybe UserProfile
+tryGetUserProfile model =
+    case model.state of
+        LoggedIn user -> Just user.profile
+        LoggedOut -> Nothing
+
+isLoggedIn : Model -> Bool
+isLoggedIn model =
+    case model.state of
+        LoggedIn _ -> True
+        LoggedOut -> False
