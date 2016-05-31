@@ -97,8 +97,8 @@ gulp.task('favicon', function () {
 });
 
 // Copy index.html to the 'serve' directory
-gulp.task('copy:dev', ['copy:bower'], function () {
-    return gulp.src(['src/index.html', 'src/js/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/favicon/**/*'], { base: './src/' })
+gulp.task('copy:dev', ['copy:bower', 'bower'], function () {
+    return gulp.src(['serve/index.html', 'src/js/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/favicon/**/*'], { base: './src/' })
         .pipe(gulp.dest('serve'))
         .pipe($.size({ title: 'index.html' }))
 });
@@ -118,7 +118,7 @@ gulp.task('copy:images', function () {
 });
 
 gulp.task('bower', function () {
-    return gulp.src('serve/index.html')
+    return gulp.src('src/index.html')
         .pipe(wiredep({
             ignorePath: '../'
         }))

@@ -20,6 +20,7 @@
     "jquery": "2.2.4",
     "bootstrap": "3.3.6",
     "material-shadows": "2.0.2",
-    "Waves": "fians/Waves#0.7.5"
+    "Waves": "fians/Waves#0.7.5",
+    "material-design-iconic-font": "2.2.0"
   }
 }
