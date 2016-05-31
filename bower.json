@@ -1,0 +1,25 @@
+{
+  "name": "admin",
+  "description": "Administration interface for exira.com",
+  "main": "",
+  "authors": [
+    "David Cumps <david@cumps.be>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/exira/admin",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2.2.4",
+    "bootstrap": "3.3.6",
+    "material-shadows": "2.0.2",
+    "Waves": "fians/Waves#0.7.5"
+  }
+}

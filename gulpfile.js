@@ -39,14 +39,14 @@ gulp.task('clean:prod', function (cb) {
     return del(['dist'], cb);
 });
 
-// Compiles the SASS files and moves them into the 'assets/stylesheets' directory
+// Compiles the LESS files and moves them into the 'assets/stylesheets' directory
 gulp.task('styles', function () {
-    // Looks at the style.scss file for what to include and creates a style.css file
-    return gulp.src('src/assets/scss/style.scss')
+    // Looks at the style.less file for what to include and creates a style.css file
+    return gulp.src('src/assets/less/style.less')
         .pipe(plumber())
-        .pipe($.sass())
+        .pipe($.less())
         .on('error', function (err) {
-            browserSync.notify('SASS error');
+            browserSync.notify('LESS error');
 
             console.error(err.message);
 
@@ -60,6 +60,7 @@ gulp.task('styles', function () {
         // AutoPrefix your CSS so it works between browsers
         .pipe($.autoprefixer('last 1 version', { cascade: true }))
         // Directory your CSS file goes to
+        .pipe(rename('app.css'))
         .pipe(gulp.dest('serve/assets/stylesheets/'))
         // Outputs the size of the CSS file
         .pipe($.size({ title: 'styles' }))
@@ -88,7 +89,7 @@ gulp.task('fonts', function () {
         .pipe($.size({ title: 'fonts' }));
 });
 
-// Copy over fonts to the 'dist' directory
+// Copy over favicon to the 'dist' directory
 gulp.task('favicon', function () {
     return gulp.src('src/assets/favicon/**')
         .pipe(gulp.dest('dist'))
@@ -97,7 +98,7 @@ gulp.task('favicon', function () {
 
 // Copy index.html to the 'serve' directory
 gulp.task('copy:dev', ['copy:bower'], function () {
-    return gulp.src(['src/index.html', 'src/js/**/*', 'src/assets/images/**/*', 'src/assets/favicon/**/*'])
+    return gulp.src(['src/index.html', 'src/js/**/*', 'src/assets/fonts/**/*', 'src/assets/images/**/*', 'src/assets/favicon/**/*'], { base: './src/' })
         .pipe(gulp.dest('serve'))
         .pipe($.size({ title: 'index.html' }))
 });
@@ -117,14 +118,16 @@ gulp.task('copy:images', function () {
 });
 
 gulp.task('bower', function () {
-    gulp.src('src/index.html')
-        .pipe(wiredep())
+    return gulp.src('serve/index.html')
+        .pipe(wiredep({
+            ignorePath: '../'
+        }))
         .pipe(gulp.dest('serve'));
 });
 
 // Setup Google Analytics
 gulp.task('ga', function () {
-    gulp.src('src/index.html')
+    return gulp.src('src/index.html')
         .pipe(ga({
             anonymizeIp: false,
             sendPageView: true,
@@ -181,7 +184,7 @@ gulp.task('elm', ['elm-init'], function () {
             fs.writeFileSync('serve/index.html', '<!DOCTYPE HTML><html><body><pre>' + err.message + '</pre></body></html>');
         })
         .pipe(rename('app.js'))
-        .pipe(gulp.dest('serve'));
+        .pipe(gulp.dest('serve/js'));
 });
 
 // BrowserSync will serve our site on a local server for us and other devices to use
@@ -203,7 +206,7 @@ gulp.task('watch', function () {
     // We need to copy dev, so index.html may be replaced by error messages.
     gulp.watch(['src/index.html', 'src/js/**/*.js'], ['copy:dev', reload]);
     gulp.watch(['src/elm/**/*.elm'], ['elm', 'copy:dev', reload]);
-    gulp.watch(['src/assets/scss/**/*.scss'], ['styles', 'copy:dev', reload]);
+    gulp.watch(['src/assets/less/**/*.less'], ['styles', 'copy:dev', reload]);
 });
 
 // Serve the site after optimizations to see that everything looks fine
@@ -222,7 +225,7 @@ gulp.task('default', ['serve:dev', 'watch']);
 
 // Builds the site but doesnt serve it to you
 // @todo: Add 'bower' here
-gulp.task('build', gulpSequence('clean:dev', ['styles', 'copy:dev', 'elm'], 'ga'));
+gulp.task('build', gulpSequence('clean:dev', ['styles', 'copy:dev', 'elm'], 'ga', 'bower'));
 
 // Builds your site with the 'build' command and then runs all the optimizations on
 // it and outputs it to './dist'
